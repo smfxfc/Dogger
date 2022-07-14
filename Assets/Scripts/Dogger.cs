@@ -25,8 +25,24 @@ public class Dogger : MonoBehaviour
 
     private void Move(Vector3 direction)
     {
-        transform.position += direction;
         Vector3 destination = transform.position + direction;
+        
+        Collider2D barrier = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Barrier"));
+        Collider2D platform = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Platform"));
+
+        // don't move if barrier is in the way
+        if (barrier != null) {
+            return;
+        }
+
+        // if moving onto platform, attach frogger to platform so he moves with the platform
+        if (platform != null) {
+            transform.SetParent(platform.transform);
+        } else {
+            transform.SetParent(null);
+        }
+
+        transform.position += direction;
     }
     
     // this block has been commented out because it caused issues with frogger movement along the x/y axis. TODO: fix this so frogger still only moves in increments of 1

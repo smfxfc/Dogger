@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3594066487324799305}
   - component: {fileID: 3594066487324799415}
   - component: {fileID: 3594066487324799304}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LogMiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3594066487487301205}
-  m_Layer: 0
+  - component: {fileID: 1096903258255462137}
+  m_Layer: 6
   m_Name: Log3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +146,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1096903258255462137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594066487487301206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182f2455039114142bf9e1d41c4c0ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 1, y: 0}
+  size: 1
+  speed: 1
 --- !u!1 &3594066488168566542
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +172,7 @@ GameObject:
   - component: {fileID: 3594066488168566541}
   - component: {fileID: 3594066488168566539}
   - component: {fileID: 3594066488168566540}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LogStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +283,7 @@ GameObject:
   - component: {fileID: 3594066488513326580}
   - component: {fileID: 3594066488513326578}
   - component: {fileID: 3594066488513326579}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LogEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}

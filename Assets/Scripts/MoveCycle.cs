@@ -19,6 +19,7 @@ public class MoveCycle : MonoBehaviour
 
     private void Update()
     {
+        // TODO: fix bug with log5 platforms looping right-to-left
         // if entire object off screen, move to other side
         if (direction.x > 0 && (transform.position.x - size) > rightEdge.x)
         {
@@ -26,7 +27,7 @@ public class MoveCycle : MonoBehaviour
             position.x = leftEdge.x - size;
             transform.position = position;
         }
-        else if (direction.x < 0 && (transform.position.x - size) < leftEdge.x)
+        else if (direction.x < 0 && (transform.position.x + size) < leftEdge.x)
         {
             Vector3 position = transform.position;
             position.x = rightEdge.x + size;
