@@ -46,8 +46,8 @@ public class Dogger : MonoBehaviour
     //        elapsed += Time.deltaTime;
     //        yield return null;
     //    }
-      
-    //    // safeguard to assure destination is reached
-    //    transform.position = destination;
+
+        // safeguard to assure destination is reached
+        //transform.position = destination;
     //}
 }
