@@ -98,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182f2455039114142bf9e1d41c4c0ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 1, y: 0}
+  direction: {x: -1, y: 0}
   size: 1
-  speed: 2.5
+  speed: 3
 --- !u!61 &1694909548041127690
 BoxCollider2D:
   m_ObjectHideFlags: 0
