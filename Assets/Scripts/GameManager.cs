@@ -1,14 +1,18 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
-    private int score;
     private Home[] homes;
-    private int lives;
 
     private Dogger dogger;
+    //public GameObject gameOverMenu
+    private int score;
+    private int lives;
+    private int time;
 
     private void Awake()
     {
@@ -21,7 +25,8 @@ public class GameManager : MonoBehaviour
         NewGame();
     }
     private void NewGame()
-    {
+    {   
+        // gameOverMenu.SetActive(false);
         SetScore(0);
         SetLives(5);
         NewLevel();
@@ -43,6 +48,19 @@ public class GameManager : MonoBehaviour
     private void Respawn()
     {
         dogger.Respawn();
+        StopAllCoroutines();
+        StartCoroutine(Timer(30));
+    }
+    private IEnumerator Timer(int duration)
+    {
+        time = duration;
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(1);
+            time--;
+        }
+
+        dogger.Death();
     }
 
     private bool Cleared()
@@ -56,12 +74,31 @@ public class GameManager : MonoBehaviour
         }
         return true;
     }
+
+    public void AdvancedRow()
+    {
+        SetScore(score + 20);
+    }
+    public void Died()
+    {
+        SetLives(lives - 1);
+        if (lives > 0) {
+            Invoke(nameof(Respawn), 1f);
+        } else
+        {
+            Invoke(nameof(GameOver), 1f);
+        }
+    }
+
     public void HomeOccupied()
     {
         dogger.gameObject.SetActive(false);
+        int timePoints = time * 3;
+        SetScore(score + timePoints + 100);
 
         if (Cleared())
         {
+            SetScore(score + 1000);
             Invoke(nameof(NewLevel), 1f);
 
         } else
@@ -70,14 +107,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void GameOver()
+    {
+        dogger.gameObject.SetActive(false);
+        //gameOverMenu.SetActive(true);
+        StopAllCoroutines();
+        StartCoroutine(CheckForPlayAgain());
+    }
+
+    private IEnumerator CheckForPlayAgain()
+    {
+        bool playAgain = false;
+
+        while (!playAgain) {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                playAgain = true;
+            }
+            yield return null;
+        }
+    }
     private void SetScore(int score)
     {
         this.score = score;
     }
-
     private void SetLives(int lives)
     {
         this.lives = lives;
     }
-
 }

@@ -7,6 +7,7 @@ public class Dogger : MonoBehaviour
     public Sprite deadSprite;
     public Sprite idleSprite;
     private SpriteRenderer spriteRenderer;
+    private float farthestRow;
 
     private Vector3 spawnPosition;
 
@@ -63,22 +64,29 @@ public class Dogger : MonoBehaviour
             transform.position = destination;
             Death();
         } else {
+            if (destination.y > farthestRow)
+            {
+                farthestRow = destination.y;
+                FindObjectOfType<GameManager>().AdvancedRow();
+            }
+
             transform.position += direction;
         }
     }
 
-    private void Death()
+    public void Death()
     {
         transform.rotation = Quaternion.identity;
         spriteRenderer.sprite = deadSprite;
         enabled = false;
-        Invoke(nameof(Respawn), 1f);
+        FindObjectOfType<GameManager>().Died();
     }
 
     public void Respawn()
     {
         transform.rotation = Quaternion.identity;
         transform.position = spawnPosition;
+        farthestRow = spawnPosition.y;
         spriteRenderer.sprite = idleSprite;
         gameObject.SetActive(true);
         enabled = true;
