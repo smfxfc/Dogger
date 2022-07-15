@@ -5,7 +5,11 @@ using UnityEngine;
 public class Dogger : MonoBehaviour
 {
     public Sprite deadSprite;
+    public Sprite idleSprite;
+
+    private float farthestRow;
     private SpriteRenderer spriteRenderer;
+    private Vector3 spawnPosition;
 
     private void Awake()
     {
@@ -62,6 +66,14 @@ public class Dogger : MonoBehaviour
         }
     }
 
+    public void Respawn()
+    {
+        transform.rotation = Quaternion.identity;
+        transform.position = spawnPosition;
+        spriteRenderer.sprite = idleSprite;
+        gameObject.SetActive(true);
+        enabled = true;
+    }
     private void Death()
     {
         transform.rotation = Quaternion.identity;
