@@ -6,14 +6,15 @@ public class Dogger : MonoBehaviour
 {
     public Sprite deadSprite;
     public Sprite idleSprite;
-
-    private float farthestRow;
     private SpriteRenderer spriteRenderer;
+
     private Vector3 spawnPosition;
 
+    // get initial position for respawning
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spawnPosition = transform.position;
     }
 
     private void Update()
@@ -66,6 +67,14 @@ public class Dogger : MonoBehaviour
         }
     }
 
+    private void Death()
+    {
+        transform.rotation = Quaternion.identity;
+        spriteRenderer.sprite = deadSprite;
+        enabled = false;
+        Invoke(nameof(Respawn), 1f);
+    }
+
     public void Respawn()
     {
         transform.rotation = Quaternion.identity;
@@ -74,13 +83,6 @@ public class Dogger : MonoBehaviour
         gameObject.SetActive(true);
         enabled = true;
     }
-    private void Death()
-    {
-        transform.rotation = Quaternion.identity;
-        spriteRenderer.sprite = deadSprite;
-        enabled = false;
-    }
-
     // detect when another collider enters trigger zone
     private void OnTriggerEnter2D(Collider2D collision)
     {
