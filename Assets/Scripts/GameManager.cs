@@ -4,12 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms.Impl;
 
+// TODO: track high score
+// TODO: add 5 levels
+// TODO: add bonus items
 public class GameManager : MonoBehaviour
 {
     private Home[] homes;
 
     private Dogger dogger;
     public GameObject gameOverMenu; 
+    
+    public Text scoreText;
+    public Text livesText;
+    public Text timeText;
+
+    
+    
     private int score;
     private int lives;
     private int time;
@@ -50,10 +60,13 @@ public class GameManager : MonoBehaviour
     private IEnumerator Timer(int duration)
     {
         time = duration;
+        timeText.text = time.ToString();
+        
         while (time > 0)
         {
             yield return new WaitForSeconds(1);
             time--;
+            timeText.text = time.ToString();
         }
 
         dogger.Death();
@@ -107,6 +120,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         dogger.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(false);
         gameOverMenu.SetActive(true);
         StopAllCoroutines();
         StartCoroutine(PlayAgain());
@@ -141,9 +155,11 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         this.score = score;
+        scoreText.text = score.ToString();
     }
     private void SetLives(int lives)
     {
         this.lives = lives;
+        livesText.text = lives.ToString();
     }
 }
