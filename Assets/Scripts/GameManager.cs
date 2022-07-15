@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private Home[] homes;
 
     private Dogger dogger;
-    //public GameObject gameOverMenu
+    public GameObject gameOverMenu; 
     private int score;
     private int lives;
     private int time;
@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
         NewGame();
     }
     private void NewGame()
-    {   
-        // gameOverMenu.SetActive(false);
+    {
+        gameOverMenu.SetActive(false);
         SetScore(0);
         SetLives(5);
         NewLevel();
@@ -40,10 +40,6 @@ public class GameManager : MonoBehaviour
         Respawn();
     }
     
-    private void NewRound()
-    {
-        Respawn();
-    }
 
     private void Respawn()
     {
@@ -103,16 +99,31 @@ public class GameManager : MonoBehaviour
 
         } else
         {
-            Invoke(nameof(NewRound), 1f);
+            Invoke(nameof(Respawn), 1f);
         }
     }
 
+    // hide game and prompt user to play again or quit
     private void GameOver()
     {
         dogger.gameObject.SetActive(false);
-        //gameOverMenu.SetActive(true);
+        gameOverMenu.SetActive(true);
         StopAllCoroutines();
-        StartCoroutine(CheckForPlayAgain());
+        StartCoroutine(PlayAgain());
+    }
+
+    private IEnumerator PlayAgain()
+    {
+        bool playAgain = false;
+        while (!playAgain)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                playAgain = true;
+            }
+            yield return null;
+        }
+        NewGame();
     }
 
     private IEnumerator CheckForPlayAgain()
