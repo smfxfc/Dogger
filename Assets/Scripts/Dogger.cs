@@ -53,7 +53,7 @@ public class Dogger : MonoBehaviour
         }
 
         // lose life
-        if (obstacle != null)
+        if (obstacle != null && platform == null) 
         {
             transform.position = destination;
             Death();
@@ -69,11 +69,11 @@ public class Dogger : MonoBehaviour
         enabled = false;
     }
 
-    // detect when an object run into Dogger, as opposed to Dogger running into the object
+    // detect when another collider enters trigger zone
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
-            Death(); 
+        if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle") && transform.parent == null) {
+            Death();
         }
     }
 
