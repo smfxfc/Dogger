@@ -1,8 +1,17 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Dogger : MonoBehaviour
 {
+    public Sprite deadSprite;
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
@@ -29,6 +38,7 @@ public class Dogger : MonoBehaviour
         
         Collider2D barrier = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Barrier"));
         Collider2D platform = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Platform"));
+        Collider2D obstacle = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Obstacle"));
 
         // don't move if barrier is in the way
         if (barrier != null) {
@@ -42,9 +52,31 @@ public class Dogger : MonoBehaviour
             transform.SetParent(null);
         }
 
-        transform.position += direction;
+        // lose life
+        if (obstacle != null)
+        {
+            transform.position = destination;
+            Death();
+        } else {
+            transform.position += direction;
+        }
     }
-    
+
+    private void Death()
+    {
+        transform.rotation = Quaternion.identity;
+        spriteRenderer.sprite = deadSprite;
+        enabled = false;
+    }
+
+    // detect when an object run into Dogger, as opposed to Dogger running into the object
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
+            Death(); 
+        }
+    }
+
     // this block has been commented out because it caused issues with frogger movement along the x/y axis. TODO: fix this so frogger still only moves in increments of 1
     //    StartCoroutine(Leap(destination));
     //}
@@ -63,7 +95,7 @@ public class Dogger : MonoBehaviour
     //        yield return null;
     //    }
 
-        // safeguard to assure destination is reached
-        //transform.position = destination;
+    // safeguard to assure destination is reached
+    //transform.position = destination;
     //}
 }
