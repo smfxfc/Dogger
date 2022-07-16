@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             SetScore(score + 1000);
             _nextLevelIndex++;
 
-            if (_nextLevelIndex > 3)
+            if (_nextLevelIndex > 5)
             {
                 GameOver();
             }
