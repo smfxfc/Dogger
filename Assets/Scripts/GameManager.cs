@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 // TODO: track high score
 // TODO: add 5 levels
@@ -17,12 +18,13 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text livesText;
     public Text timeText;
-
-    
-    
     private int score;
     private int lives;
     private int time;
+
+    private static int _nextLevelIndex = 1;
+    
+    
 
     private void Awake()
     {
@@ -108,6 +110,15 @@ public class GameManager : MonoBehaviour
         if (Cleared())
         {
             SetScore(score + 1000);
+            _nextLevelIndex++;
+
+            if (_nextLevelIndex > 3)
+            {
+                GameOver();
+            }
+
+            string nextLevelName = "Level" + _nextLevelIndex;
+            SceneManager.LoadScene(nextLevelName);
             Invoke(nameof(NewLevel), 1f);
 
         } else
