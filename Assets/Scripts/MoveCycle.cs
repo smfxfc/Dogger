@@ -13,8 +13,8 @@ public class MoveCycle : MonoBehaviour
     private Vector3 rightEdge;
     private void Start()
     {
-        leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        rightEdge= Camera.main.ViewportToWorldPoint(Vector3.right);
+        leftEdge.Set(-7, 0, 0);
+        rightEdge.Set(7, 0, 0);
     }
 
     private void Update()
